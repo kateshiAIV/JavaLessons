@@ -1,22 +1,47 @@
 package org.example;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     public static void main(String[] args) {
 
-        Beach beach = new Beach(10);
-        Boy b1 = new Boy(beach, "Boy");
-        Goose g1 = new Goose(beach, "Goose 1");
-        Goose g2 = new Goose(beach, "Goose 2");
-        Goose g3 = new Goose(beach, "Goose 3");
-        Goose g4 = new Goose(beach, "Goose 4");
-        b1.start();
-        //123
-        g1.start();
-        g2.start();
-        g3.start();
-        g4.start();
+        int i;
+        FileInputStream fin = null;
+        FileOutputStream fout = null;
+
+        try{
+            fin = new FileInputStream("TEST.txt");
+            fout = new FileOutputStream("TEST2.txt");
+            do {
+                i = fin.read();
+                if (i != -1) {
+                    fout.write(i);
+                }
+            }while(i!=-1);
+
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally {
+            try{
+                if(fin!=null) {
+                    fin.close();
+                }
+                if(fout != null) {
+                    fout.close();
+                }
+            }catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+
     }
 }

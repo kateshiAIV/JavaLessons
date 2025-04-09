@@ -1,9 +1,11 @@
 package org.example;
 
+import java.util.Random;
+
 import static java.lang.Thread.sleep;
 
 public class Beach{
-
+    Random rand = new Random();
     private final Object lock = new Object();
     int stones = 0;
     Beach(int stones){
@@ -20,11 +22,14 @@ public class Beach{
         synchronized (lock){
             stones--;
             try{
-                sleep(1000);
+                int time = rand.nextInt(10);
+                System.out.println(Thread.currentThread().getName() + " Не спиздил ни одного камушка и пошел спать на " + time + "Секунд");
+                sleep(100*time);
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(stones + " " + Thread.currentThread().getName());
+            System.out.println(Thread.currentThread().getName() + " Спиздил " + stones + " камушков");
 
         }
     }
