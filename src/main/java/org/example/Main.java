@@ -10,38 +10,27 @@ import java.io.IOException;
 public class Main {
 
     public static void main(String[] args) {
-
-        int i;
-        FileInputStream fin = null;
-        FileOutputStream fout = null;
-
-        try{
-            fin = new FileInputStream("TEST.txt");
-            fout = new FileOutputStream("TEST2.txt");
-            do {
+        try(FileInputStream fin = new FileInputStream("airorders_data2.csv");
+        FileOutputStream fout = new FileOutputStream("TEST3.txt")){
+            int i;
+            do{
                 i = fin.read();
-                if (i != -1) {
+
+                if(i != (int)';'){
                     fout.write(i);
+                }else {
+                    fout.write((int)'-');
+                    fout.write((int)'-');
+                    fout.write((int)'-');
+                    fout.write((int)'>');
                 }
-            }while(i!=-1);
+
+            }while(i != -1);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
             throw new RuntimeException(e);
-        }finally {
-            try{
-                if(fin!=null) {
-                    fin.close();
-                }
-                if(fout != null) {
-                    fout.close();
-                }
-            }catch (IOException e) {
-                throw new RuntimeException(e);
-            }
         }
-
-
     }
 }
