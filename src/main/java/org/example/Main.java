@@ -9,24 +9,38 @@ import java.io.IOException;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
+
+
+
     public static void main(String[] args) {
-        try(FileInputStream fin = new FileInputStream("airorders_data2.csv");
-        FileOutputStream fout = new FileOutputStream("TEST3.txt")){
+        try(FileInputStream fin = new FileInputStream("AirOrders.csv");
+        FileOutputStream fout = new FileOutputStream("AirOrders.txt")){
             int i;
+            Boolean A = false;
+            Boolean I = false;
+            Boolean R = false;
+            int ctr = 0;
             do{
                 i = fin.read();
-
-                if(i != (int)';'){
-                    fout.write(i);
-                }else {
-                    fout.write((int)'-');
-                    fout.write((int)'-');
-                    fout.write((int)'-');
-                    fout.write((int)'>');
+                if (i == (int)'R' && I && A ){
+                    ctr++;
+                    A = false;
+                    I = false;
+                    R = false;
+                }else if(i ==(int)'I' &&  A){
+                    I = true;
+                }else if (i == (int)'A') {
+                    A = true;
+                }else{
+                    A = false;
+                    I = false;
+                    R = false;
                 }
 
-            }while(i != -1);
 
+            }while(i != -1);
+            fout.write(ctr);
+            System.out.println(ctr);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {
